@@ -3,19 +3,22 @@ ul{
     overflow:hidden;
     padding: 0px;
     margin : 0px;
-    background-color: aqua;
-
+    background-color:rgb(218, 212, 204)
+    
 }
 li{
     float :left;
     margin : 10px;
-}
-li.NavLink {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+    padding:4px;
     text-decoration: none;
+
+    font-size: large;
+}
+a {
+    text-decoration: none;
+    color:rgb(241, 237, 232);
+    background-color: black;
+    padding : 8px 20px
   }
 
     

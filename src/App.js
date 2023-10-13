@@ -8,8 +8,12 @@ import Protected from "./Component/Protected";
 const App = () => {
   return (
     <Router>
-      <Navbar />
-      <Routes>
+      {
+        localStorage.getItem('token')?
+        <Navbar />
+        :null
+      }
+     <Routes>
         <Route
           path="/dashboard"
           element={<Protected Component={Dashboard} />}

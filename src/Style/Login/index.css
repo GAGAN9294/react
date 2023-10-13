@@ -1,0 +1,31 @@
+.main{
+    text-align: center;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D);
+}
+.login-form{
+    display:flex;
+    flex-direction:column;
+    border: 2px solid black;
+    padding: 100px;
+    background-color:rgb(241, 237, 232) ;
+}
+input{
+    border:none;
+    border-radius:10px;
+    padding : 1rem;
+    border : 2px solid black
+}
+label{
+    text-align :left ;
+    font-size: large;
+}
+.button{
+    cursor:pointer;
+    background-color: black;
+    color:rgb(241, 237, 232);
+    font-size: large;
+}
