@@ -1,22 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/login";
-import Dashboard from "./pages/dashboard";
-import Navbar from "./Component/Navbar";
-import Protected from "./Component/Protected";
+import LoginPage from "./Pages/login";
+import Dashboard from "./Pages/dashboard";
+import Navbar from "./Components/Navbar";
+import Protected from "./Components/Protected";
 
 const App = () => {
   return (
     <Router>
-        <Navbar/>
-      
-     <Routes>
+      <Navbar />
+
+      <Routes>
         <Route
           path="/dashboard"
           element={<Protected Component={Dashboard} />}
         />
         <Route path="/login" element={<LoginPage />} />
-        <Route path ="*" element= {<LoginPage />}/> 
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>
   );

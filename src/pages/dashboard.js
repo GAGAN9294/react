@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "Redux/Slices/Users";
 import { Table } from "antd";
 import axios from "axios";
-import 'Style/Pages/Dashboard/index.css'
-import LoadingSpinner from "Component/LoadingSpinner";
+import "Styles/Pages/Dashboard/index.css";
+import LoadingSpinner from "Components/LoadingSpinner";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,41 +22,46 @@ const Dashboard = () => {
       key: "id",
       title: "ID",
       dataIndex: "id",
-      className:'style'
+      className: "style",
     },
     {
       key: "firstName",
       title: "FirstName",
       dataIndex: "firstName",
-      className:'column'
+      className: "column",
     },
     {
       key: "lastname",
       title: "LastName",
       dataIndex: "lastName",
-      className:'style'
+      className: "style",
     },
     {
       key: "age",
       title: "Age",
       dataIndex: "age",
-      className:'column'
+      className: "column",
     },
     {
       key: "gender",
       title: "Gender",
       dataIndex: "gender",
-      className:'style'
+      className: "style",
     },
   ];
 
   return (
     <div className="table">
-      {isLoading ? 
-      <LoadingSpinner/>
-      :
-        <Table className="customtable" dataSource={users} columns={columns} pagination={false} />
-      }
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Table
+          className="customtable"
+          dataSource={users}
+          columns={columns}
+          pagination={false}
+        />
+      )}
     </div>
   );
 };
