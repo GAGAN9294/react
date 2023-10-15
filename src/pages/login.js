@@ -1,12 +1,19 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import {useForm} from 'react-hook-form'
 import {useNavigate} from "react-router-dom";
-import '../Style/Login/index.css'
+import 'Style/Pages/Login/index.css'
 
 const LoginPage = () => {
-  const{register,handleSubmit} = useForm()
+ 
+  const{register,handleSubmit,formState:{errors}} = useForm()
  const navigate = useNavigate()
+ useEffect(()=>{
+  const isAuthenticated = localStorage.getItem('token')
+  if(isAuthenticated){
+    navigate('/dashboard')
+  }
+ },[navigate])
   const onSubmit =(data)=>{
     axios.post('https://reqres.in/api/login', {
       email: data.email,
@@ -24,15 +31,25 @@ const LoginPage = () => {
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}> 
         <label > Email </label>
         <br />
-        <input {...register("email")} />
+        <input {...register("email",{required:true})}
+        aria-invalid={errors.email ? "true" : "false"} />
+        {errors.email?.type === 'required' && (
+        <h4 style={{color:'red',textAlign:'left'}}> Email is required </h4>
+      )
+    }
         <br />
         <br />
         <label> Password </label>
         <br />
-        <input type="password" {...register("password")}/>
+        <input type="password" {...register("password",{required:true})}/>
+        {
+          errors.password?.type === 'required' && 
+          <h4 style={{color:'red',textAlign:'left'}}> Password is required </h4>
+        }
         <br />
         <br />
         <input className="button" type="submit"/>
+        
       </form>
     
     </div>

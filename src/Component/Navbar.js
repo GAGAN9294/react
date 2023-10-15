@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink , useNavigate} from "react-router-dom";
-import "Style/Navbar/index.css";
+import "Style/Component/Navbar/index.css";
 
 
 const Navbar = () => {
@@ -11,6 +11,8 @@ const Navbar = () => {
   }
   return (
     <>
+    {
+      localStorage.getItem('token') ?
       <nav>
         <ul>
           <li>
@@ -34,6 +36,9 @@ const Navbar = () => {
 
         </ul>
       </nav>
+      : null
+    }
+      
     </>
   );
 };
