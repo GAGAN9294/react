@@ -1,67 +1,80 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import LoadingSpinner from "Components/LoadingSpinner";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "Styles/Pages/Login/index.css";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const schema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).max(32).required(),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
+
   const navigate = useNavigate();
+
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("token");
     if (isAuthenticated) {
       navigate("/dashboard");
     }
   }, [navigate]);
+
   const onSubmit = (data) => {
+    setIsLoading(true);
     axios
       .post("https://reqres.in/api/login", {
         email: data.email,
         password: data.password,
       })
       .then((response) => {
+        console.log(response)
+        setIsLoading(false);
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
           navigate("/dashboard");
         }
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        setIsLoading(false);
+        alert(error);
+      });
   };
 
   return (
     <div className="main">
-      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-        <label> Email </label>
-        <br />
-        <input
-          {...register("email", { required: true })}
-          aria-invalid={errors.email ? "true" : "false"}
-        />
-        {errors.email?.type === "required" && (
-          <h4 style={{ color: "red", textAlign: "left" }}>
-            {" "}
-            Email is required{" "}
-          </h4>
-        )}
-        <br />
-        <br />
-        <label> Password </label>
-        <br />
-        <input type="password" {...register("password", { required: true })} />
-        {errors.password?.type === "required" && (
-          <h4 style={{ color: "red", textAlign: "left" }}>
-            {" "}
-            Password is required{" "}
-          </h4>
-        )}
-        <br />
-        <br />
-        <input className="button" type="submit" />
-      </form>
+      <div style={{ width: "420px" }}>
+        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+          {/* <span className="form-container"> */}
+          <label> Email </label>
+          <input {...register("email", { required: true })} />
+          <p className="error-message">{errors.email?.message}</p>
+
+          <label> Password </label>
+          <input
+            type="password"
+            {...register("password", { required: true })}
+          />
+          <p className="error-message">{errors.password?.message}</p>
+
+          {/* </span> */}
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <input className="button" type="submit" />
+          )}
+        </form>
+      </div>
     </div>
   );
 };

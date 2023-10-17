@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUsers } from "Redux/Slices/Users";
 import { Table } from "antd";
 import axios from "axios";
 import "Styles/Pages/Dashboard/index.css";
-import LoadingSpinner from "Components/LoadingSpinner";
 
 const Dashboard = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    setIsLoading(true);
     axios.get("https://dummyjson.com/users").then((res) => {
       dispatch(setUsers(res.data.users));
-      setIsLoading(false);
     });
   }, [dispatch]);
   const users = useSelector((state) => state.users.data);
@@ -52,16 +48,12 @@ const Dashboard = () => {
 
   return (
     <div className="table">
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
         <Table
           className="customtable"
           dataSource={users}
           columns={columns}
           pagination={false}
         />
-      )}
     </div>
   );
 };
